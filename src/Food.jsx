@@ -6,14 +6,14 @@ const Foods = [
   { id: 5, name: "Smoothie", category: "Drinks", type: "🟢veg", price: 150, image: "/images/Foods/Food5.jpg.png" },
   { id: 6, name: "Bagel Sandwich", category: "Breakfast", type: "🟢veg", price: 110, image: "/images/Foods/Food6.jpg.png" },
 
-  { id: 7, name: "veg Burger", category: "Main course", type: "🟢veg", price: 180, image: "/images/Foods/Food7.jpg.png" },
-  { id: 8, name: "Chicken Burger", category: "Main course", type: "🔴non-veg", price: 200, image: "/images/Foods/Food8.jpg.png" },
-  { id: 9, name: "Pizza Margherita", category: "Main course", type: "🟢veg", price: 250, image: "/images/Foods/Food9.jpg.png" },
-  { id: 10, name: "Pasta Alfredo", category: "Main course", type: "🟢veg", price: 220, image: "/images/Foods/Food10.jpg.png" },
-  { id: 11, name: "Grilled Sandwich", category: "Main course", type: "🟢veg", price: 170, image: "/images/Foods/Food11.jpg.png" },
-  { id: 12, name: "Fried Rice", category: "Main course", type: "🟢veg", price: 200, image: "/images/Foods/Food12.jpg.png" },
-  { id: 13, name: "veg Curry", category: "Main course", type: "🟢veg", price: 190, image: "/images/Foods/Food13.jpg.png" },
-  { id: 14, name: "Chicken Curry", category: "Main course", type: "🔴non-veg", price: 220, image: "/images/Foods/Food14.jpg.png" },
+  { id: 7, name: "veg Burger", category: "Main", type: "🟢veg", price: 180, image: "/images/Foods/Food7.jpg.png" },
+  { id: 8, name: "Chicken Burger", category: "Main", type: "🔴non-veg", price: 200, image: "/images/Foods/Food8.jpg.png" },
+  { id: 9, name: "Pizza Margherita", category: "Main", type: "🟢veg", price: 250, image: "/images/Foods/Food9.jpg.png" },
+  { id: 10, name: "Pasta Alfredo", category: "Main", type: "🟢veg", price: 220, image: "/images/Foods/Food10.jpg.png" },
+  { id: 11, name: "Grilled Sandwich", category: "Main", type: "🟢veg", price: 170, image: "/images/Foods/Food11.jpg.png" },
+  { id: 12, name: "Fried Rice", category: "Main", type: "🟢veg", price: 200, image: "/images/Foods/Food12.jpg.png" },
+  { id: 13, name: "veg Curry", category: "Main", type: "🟢veg", price: 190, image: "/images/Foods/Food13.jpg.png" },
+  { id: 14, name: "Chicken Curry", category: "Main", type: "🔴non-veg", price: 220, image: "/images/Foods/Food14.jpg.png" },
 
   { id: 15, name: "Chocolate Cake", category: "Dessert", type: "🟢veg", price: 180, image: "/images/Foods/Food15.jpg.png" },
   { id: 16, name: "Brownie", category: "Dessert", type: "🟢veg", price: 150, image: "/images/Foods/Food16.jpg.png" },
@@ -42,9 +42,9 @@ const Foods = [
   { id: 36, name: "Quinoa Salad", category: "Salads", type: "🟢veg", price: 160, image: "/images/Foods/Food36.jpg.png" },
   { id: 37, name: "Cobb Salad", category: "Salads", type: "🔴non-veg", price: 150, image: "/images/Foods/Food37.jpg.png" },
 
-  { id: 38, name: "veg Sandwich", category: "Main course", type: "🟢veg", price: 180, image: "/images/Foods/Food38.jpg.png" },
-  { id: 39, name: "Chicken Nuggets", category: "Main course", type: "🔴non-veg", price: 200, image: "/images/Foods/Food39.jpg.png" },
-  { id: 40, name: "Pasta Bolognese", category: "Main course", type: "🔴non-veg", price: 230, image: "/images/Foods/Food40.jpg.png" },
+  { id: 38, name: "veg Sandwich", category: "Main", type: "🟢veg", price: 180, image: "/images/Foods/Food38.jpg.png" },
+  { id: 39, name: "Chicken Nuggets", category: "Main", type: "🔴non-veg", price: 200, image: "/images/Foods/Food39.jpg.png" },
+  { id: 40, name: "Pasta Bolognese", category: "Main", type: "🔴non-veg", price: 230, image: "/images/Foods/Food40.jpg.png" },
 ];
 
 export default Foods;
