@@ -5,42 +5,48 @@ import Foods from "../Food";
 import Cart from "../Componets/Cart";
 
 const Home = () => {
-  const [FilteredFood, setFilteredFood] = useState(Foods);
-  const [search, setsearch] = useState("");
-  const [Selected, setSelected] = useState("All");
-  const [ShowCart, setShowCart] = useState(false);
-  const [CartItems, setCartItems] = useState([]);
+  const [filteredFood, setFilteredFood] = useState(Foods);
+  const [search, setSearch] = useState("");
+  const [selected, setSelected] = useState("All");
+  const [showCart, setShowCart] = useState(false);
+  const [cartItems, setCartItems] = useState([]);
 
   const filter = (categoryName) => {
-    setsearch("");
+    setSearch("");
     setSelected(categoryName);
+
     if (categoryName === "All") {
       setFilteredFood(Foods);
     } else {
-      setFilteredFood(Foods.filter((item) => item.category === categoryName));
+      setFilteredFood(
+        Foods.filter((item) => item.category === categoryName)
+      );
     }
   };
 
-  const SearchedFood = FilteredFood.filter((item) =>
+  const searchedFood = filteredFood.filter((item) =>
     item.name.toLowerCase().includes(search.toLowerCase())
   );
-
-  const Addtocart = (food) => {
-    setCartItems((prev) => [
-      ...prev,
-      {
-        id: food.id,
-        name: food.name,
-        price: food.price,
-        image: food.image,
-        qty: 1,
-      },
-    ]);
+  const addToCart = (food) => {
+    setCartItems((prev) => {
+      const existing = prev.find((item) => item.id === food.id);
+      if (existing) {
+        return prev.map((item) =>
+          item.id === food.id ? { ...item, qty: item.qty + 1 } : item
+        );
+      }
+      return [
+        ...prev,
+        { id: food.id, name: food.name, price: food.price, image: food.image, qty: 1 },
+      ];
+    });
   };
 
   const increaseQty = (id) => {
     setCartItems((prev) =>
-      prev.map((item) => (item.id === id ? { ...item, qty: item.qty + 1 } : item))
+      prev.map((item) =>
+        item.id === id ? { ...item, qty: item.qty + 1 } : item
+      )
     );
   };
 
@@ -56,106 +62,125 @@ const Home = () => {
     setCartItems((prev) => prev.filter((item) => item.id !== id));
   };
 
+  const subtotal = cartItems.reduce(
+    (acc, item) => acc + item.price * item.qty,
+    0
+  );
+  const deliveryFee = cartItems.length > 0 ? 50 : 0;
+  const grandTotal = subtotal + deliveryFee;
+
   return (
     <div className="w-full min-h-screen bg-slate-200">
-      <Nav Search={search} setSearch={setsearch} setcart={setShowCart} />
 
+      <Nav Search={search} setSearch={setSearch} setcart={setShowCart} />
       <div className="flex justify-around gap-4 flex-wrap p-2 md:p-4">
         {Categories.map((item) => (
           <div
-            className={`h-20 md:h-40 md:w-40 w-20 transition-transform duration-300 ${
-              Selected === item.name
-                ? "bg-green-300"
-                : "bg-white hover:bg-green-100"
-            } cursor-pointer flex rounded-lg shadow-xl items-center flex-col gap-3 justify-center`}
             key={item.id}
             onClick={() => filter(item.name)}
+            className={`h-20 md:h-40 md:w-40 w-20 cursor-pointer flex flex-col items-center justify-center gap-3 rounded-lg shadow-xl transition ${
+              selected === item.name
+                ? "bg-green-300"
+                : "bg-white hover:bg-green-100"
+            }`}
           >
             <span>{item.icon}</span>
             <span className="font-bold text-sm md:text-xl">{item.name}</span>
           </div>
         ))}
-
-        <div className="flex justify-evenly gap-4 flex-wrap p-2 md:p-6 w-full">
-          {SearchedFood.length === 0 ? (
-            <div className="w-full flex flex-col items-center justify-center py-20 text-gray-500">
-              <span className="text-5xl mb-4">😔</span>
-              <h2 className="text-xl md:text-2xl font-semibold">
-                Unfortunately, this item is not available
-              </h2>
-              <p className="mt-2 text-sm md:text-base">
-                Try another category or search something else.
-              </p>
-            </div>
-          ) : (
-            SearchedFood.map((item) => (
-              <div
-                key={item.id}
-                className="border-2 hover:border-green-400 group h-60 md:h-80 w-40 md:w-60 shadow-3xl"
-              >
-                <div className="overflow-hidden">
-                  <img
-                    className="transition-transform duration-300 group-hover:scale-105 h-30 md:h-45 w-40 md:w-60 object-cover"
-                    src={item.image}
-                    alt={item.name}
-                  />
-                </div>
-                <div className="text-center font-bold md:text-2xl">{item.name}</div>
-                <div className="font-bold text-sm md:text-lg">NPR. {item.price}/-</div>
-                <div
+      </div>
+      <div className="flex justify-evenly gap-4 flex-wrap p-2 md:p-6">
+        {searchedFood.length === 0 ? (
+          <div className="w-full text-center py-20 text-gray-500">
+            <span className="text-5xl">😔</span>
+            <h2 className="text-xl font-semibold mt-4">
+              Item not available
+            </h2>
+          </div>
+        ) : (
+          searchedFood.map((item) => (
+            <div
+              key={item.id}
+              className="border-2 hover:border-green-400 h-60 md:h-80 w-40 md:w-60 shadow-xl bg-white"
+            >
+              <img
+                src={item.image}
+                alt={item.name}
+                className="h-32 md:h-44 w-full object-cover"
+              />
+              <div className="p-2 text-center">
+                <h3 className="font-bold md:text-xl">{item.name}</h3>
+                <p className="font-bold">NPR {item.price}/-</p>
+                <p
                   className={`font-bold ${
-                    item.type === "🟢veg" ? "text-green-400" : "text-red-400"
+                    item.type === "🟢veg" ? "text-green-500" : "text-red-500"
                   }`}
                 >
                   {item.type}
-                </div>
-                <div className="flex justify-center items-center">
-                  <button
-                    onClick={() => Addtocart(item)}
-                    className="hover:text-black hover:cursor-pointer p-1 bg-green-300 md:m-4 m-2 rounded-lg"
-                  >
-                    Add to Cart
-                  </button>
-                </div>
+                </p>
+                <button
+                  onClick={() => addToCart(item)}
+                  className="mt-2 bg-green-400 px-3 py-1 rounded hover:bg-green-500"
+                >
+                  Add to Cart
+                </button>
               </div>
-            ))
-          )}
-        </div>
+            </div>
+          ))
+        )}
       </div>
-
-      {ShowCart && (
-        <div className="h-full w-[80%] shadow-xl md:w-[55%] lg:w-[40%] xl:w-[30%] bg-white top-0 right-0 fixed">
-          <header className="pt-[10%] bg-red-200 text-xl md:text-2xl pl-[5%] flex justify-around">
-            <span>Your Items</span>
-            <span onClick={() => setShowCart(false)}>❌</span>
-          </header>
-
-          <Cart
-            cart={CartItems}
-            increase={increaseQty}
-            decrease={decreaseQty}
-            remove={removeItem}
-          />
+      {showCart && (
+        <div className="fixed top-0 right-0 h-full w-[85%] sm:w-[60%] md:w-[45%] lg:w-[35%] bg-white shadow-xl z-50 flex flex-col">
+          <div className="flex justify-between items-center p-4 bg-green-200">
+            <h2 className="text-xl font-bold">Your Cart</h2>
+            <button onClick={() => setShowCart(false)}>❌</button>
+          </div>
+          <div className="flex-1 overflow-y-auto">
+            {cartItems.length === 0 ? (
+              <p className="text-center text-gray-500 mt-10">
+                Your cart is empty 😔
+              </p>
+            ) : (
+              <Cart
+                cart={cartItems}
+                increase={increaseQty}
+                decrease={decreaseQty}
+                remove={removeItem}
+              />
+            )}
+          </div>
 
           <div className="p-4 border-t">
             <div className="flex justify-between mb-2">
               <span>Subtotal</span>
-              <span>
-                Rs.{" "}
-                {CartItems.reduce((acc, item) => acc + item.price * item.qty, 0)}
-              </span>
+              <span>Rs. {subtotal}</span>
             </div>
+
             <div className="flex justify-between mb-2">
               <span>Delivery Fee</span>
-              <span>Rs. 50</span>
+              <span>Rs. {deliveryFee}</span>
             </div>
+
             <div className="flex justify-between font-bold text-lg">
               <span>Grand Total</span>
-              <span>
-                Rs.{" "}
-                {CartItems.reduce((acc, item) => acc + item.price * item.qty, 0) + 50}
-              </span>
+              <span>Rs. {grandTotal}</span>
             </div>
+
+            <button
+              disabled={cartItems.length === 0}
+              onClick={() => {
+                alert("Order placed successfully 🎉");
+                setCartItems([]);
+                setShowCart(false);
+              }}
+              className={`w-full mt-4 py-3 rounded-lg text-white font-bold ${
+                cartItems.length === 0
+                  ? "bg-gray-400 cursor-not-allowed"
+                  : "bg-green-500 hover:bg-green-600"
+              }`}
+            >
+              Place Order
+            </button>
           </div>
         </div>
       )}

@@ -1,30 +1,50 @@
-import React from 'react'
+import React from "react";
+
 const CartItem = ({ item, increase, decrease, remove }) => {
   return (
-    <div>
-      <div className='bg-red-200 w-full h-[60%] relative mt-1'>
-        <span>
-          <img src={item.image} className='h-35 w-35 rounded-2xl p-1'></img>
-        </span>
-        <span className='p-1 md:text-xl'>
-          {item.name}
-        </span>
-        <span className='float-right absolute md:text-xl flex flex-col justify-center items-center right-[25%] top-[30%]'>
-          Enter Quantity
-          <div className=''>
-            <span onClick={() => decrease(item.id)} className='px-2 border-2'>-</span>
-            <span className='border-2'> {item.qty} </span>
-            <span onClick={() => increase(item.id)} className='px-2 border-2'>+</span>
-            <button onClick={() => remove(item.id)} className="text-red-500">
-              ❌
-            </button>
-          </div>
-        </span>
-        <span> Rs.{item.price}</span>
+    <div className="flex items-center gap-4 p-3 border-b">
+      <img
+        src={item.image}
+        alt={item.name}
+        className="h-20 w-20 object-cover rounded-lg"
+      />
+      <div className="flex-1">
+        <h3 className="font-semibold">{item.name}</h3>
+        <p className="text-sm text-gray-600">
+          Rs. {item.price} × {item.qty} ={" "}
+          <span className="font-bold">
+            Rs. {item.price * item.qty}
+          </span>
+        </p>
       </div>
-      <div></div>
-    </div>
-  )
-}
+      <div className="flex items-center gap-2">
+        <button
+          onClick={() => decrease(item.id)}
+          disabled={item.qty === 1}
+          className={`px-2 border rounded ${
+            item.qty === 1 ? "opacity-40 cursor-not-allowed" : ""
+          }`}
+        >
+          −
+        </button>
 
-export default CartItem
+        <span className="px-2">{item.qty}</span>
+
+        <button
+          onClick={() => increase(item.id)}
+          className="px-2 border rounded"
+        >
+          +
+        </button>
+      </div>
+      <button
+        onClick={() => remove(item.id)}
+        className="text-red-500 text-lg"
+      >
+        ❌
+      </button>
+    </div>
+  );
+};
+
+export default CartItem;
