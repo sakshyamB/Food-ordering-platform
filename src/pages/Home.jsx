@@ -101,7 +101,7 @@ const Home = () => {
           searchedFood.map((item) => (
             <div
               key={item.id}
-              className="border-2 hover:border-green-400 h-60 md:h-80 w-40 md:w-60 shadow-xl bg-white"
+              className="border-2 hover:border-green-400 h-70 md:h-80 w-40 md:w-60 shadow-xl bg-white"
             >
               <img
                 src={item.image}
